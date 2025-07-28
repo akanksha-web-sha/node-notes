@@ -41,8 +41,8 @@
 
 
     
-exports.PI = 3.14;
-module.exports = ()=>{
-    console.log("Hello from the default function of the math module!");
-}
+// exports.PI = 3.14;
+// module.exports = ()=>{
+//     console.log("Hello from the default function of the math module!");
+// }
 
