@@ -41,11 +41,11 @@ app.get("/", function(req, res){
 
 app.get("/contact", function(req, res){
     res.json({message: "+911234567890"})
-})
+});
 
 app.get("/products", (req, res)=>{
     res.json({message: products});
-})
+});
 // app.get("/product/:index", (req, res)=>{
 //     // res.json({message: products[0]});
 //     // console.log(req.params);
