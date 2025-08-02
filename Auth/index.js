@@ -6,8 +6,8 @@ const app = express();
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: "",
-    pass: "",
+    user: "sanjanadagar301@gmail.com",
+    pass: "sdnwiiaskmjjynkl",
   },
 });
 
@@ -86,6 +86,59 @@ app.post("/signup", express.json(), async (req, res) => {
       }
     );
     res.json({ message: "Signed up!" });
+  } catch (error) {
+    res.json({ error: error.message });
+  }
+});
+
+app.post("/forgotpass", express.json(), async (req, res) => {
+  try {
+    const cred = req.body;
+    const data = await fs.readFile("./users.json", "utf-8");
+    const users = JSON.parse(data);
+
+    const userFound = users.findIndex((el) => el.email == cred.email);
+
+    if (userFound == -1) throw new Error("Invalid credentials!");
+
+    const otp = Math.floor(Math.random() * 900000) + 100000;
+
+    transporter.sendMail({ to: cred.email, text: String(otp) }, async (err) => {
+      if (err)
+        throw new Error("Could not process your request  at this moment!");
+
+      users[userFound].otp = otp;
+      let userString = JSON.stringify(users);
+      await fs.writeFile("./users.json", userString);
+      res.json({ message: "An otp has been sent to your email address!" });
+    });
+  } catch (error) {
+    res.json({ error: error.message });
+  }
+});
+
+app.post("/updatepass", express.json(), async (req, res) => {
+  try {
+    const cred = req.body;
+    //Read users.json
+    const data = await fs.readFile("./users.json", "utf-8");
+
+    //json parse users data to users array
+    const users = JSON.parse(data);
+    //Find the index of the element with the given email address
+    const foundIndex = users.findIndex((el) => el.email == cred.email);
+    if (foundIndex == -1) throw new Error("User not found!");
+    users[foundIndex].password = cred.newPassword;
+    users[foundIndex].email = cred.newEmail;
+    // convert the users array back to json string
+
+    const userString = JSON.stringify(users);
+
+    // overwrite the users.json file
+
+    await fs.writeFile("./users.json", userString);
+
+    res.json({ message: "Password updated!" });
   } catch (error) {
     res.json({ error: error.message });
   }
