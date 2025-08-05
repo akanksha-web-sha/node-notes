@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact Form</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+
+  <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+    <h2 class="text-2xl font-semibold mb-6 text-gray-800 text-center">Contact Us</h2>
+
+    <form id="contactForm" class="space-y-5">
+      <!-- Name Field -->
+      <div>
+        <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Name</label>
+        <input type="text" id="name" name="name" required
+               class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+      </div>
+
+      <!-- Email Field -->
+      <div>
+        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+        <input type="email" id="email" name="email" required
+               class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+      </div>
+
+      <!-- Message Field -->
+      <div>
+        <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Message</label>
+        <textarea id="message" name="message" rows="4" required
+                  class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"></textarea>
+      </div>
+
+      <!-- Submit Button -->
+      <div>
+        <button type="submit"
+                class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-200">
+          Send
+        </button>
+      </div>
+    </form>
+  </div>
+
+
+  <script>
+    const contactForm = document.getElementById("contactForm");
+
+    async function submitFormData(contact){
+        try {
+            let response = await fetch("http://localhost:8080/contact", {
+                method: "POST",
+                body: JSON.stringify(contact),
+                headers: {"content-type": "application/json"}
+            });
+
+            if(!response.ok){
+              throw new Error("Could not process your request at this moment!");
+            }
+
+            response = await response.json();
+
+            console.log(response);
+            alert("We got your query and will get back to you soon!");
+        } catch (error) {
+          alert(error.message);
+            console.log(error)
+        }
+    }
+
+
+    contactForm.addEventListener("submit", (e)=>{
+        e.preventDefault();
+        const name = e.target.name.value;
+        const email = e.target.email.value;
+        const message = e.target.message.value;
+
+        const contact = {name, email, message};
+        console.log(contact);
+        submitFormData(contact);
+    })
+
+  </script>
+</body>
+</html>
+
+
+<!-- 
+
+name, email, message
+
+
+
+-->
