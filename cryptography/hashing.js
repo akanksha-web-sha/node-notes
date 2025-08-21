@@ -30,7 +30,7 @@
 
 
 
-const crypto = require("crypto");
+// const crypto = require("crypto");
 
 // let password = "12345678";
 // const salt = crypto.randomBytes(8).toString("hex");
@@ -45,16 +45,18 @@ const crypto = require("crypto");
 
 
 
-const [hash, salt] = "75e23b3f50e4faf5468e83ec3b96675722c89b0460744dd72d9580c2884f7da6.2ef30f95430dc712".split(".");
+// const [hash, salt] = "75e23b3f50e4faf5468e83ec3b96675722c89b0460744dd72d9580c2884f7da6.2ef30f95430dc712".split(".");
 
-const givenPass = "12345678"+salt;
+// const givenPass = "12345678"+salt;
 
-const newHash = crypto.createHash("sha256").update(givenPass).digest("hex");
-if(newHash==hash){
-    console.log("Password is correct!");
-}else{
-    console.log("Incorrect Password!");
-}
+// const newHash = crypto.createHash("sha256").update(givenPass).digest("hex");
+// if(newHash==hash){
+//     console.log("Password is correct!");
+// }else{
+//     console.log("Incorrect Password!");
+// }
+
+
 
 
 
