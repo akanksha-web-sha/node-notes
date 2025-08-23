@@ -14,6 +14,7 @@ function register(req, res, next){
     next();
 }
 
+
 function third(){
     return (req, res, next)=>{
         console.log("Fromt the middleware returned by the third function!");
@@ -81,12 +82,31 @@ Express:
     PUT - Replace an existing resource entirely
     PATCH - update just one part of a resource (password update)
     DELETE - Delete a resource
+    ALL - allows any method
 
 
-Basic server setup
+Basic server setup for API
 Request-response cycle and middleware
 all path handler
 404 route handler
+connecting Fronetend and backend (cors middleware)
+cryptography 
+Email
+Basic Authentication Flow (jwt baki hai)
+File System
+Buffers etc
+
+
+
+Nahi hua hai:
+        error handling middleware
+        streams
+        serving static files
+        file uploads
+        database
+
+        router
+        mvc
 
 
 */
