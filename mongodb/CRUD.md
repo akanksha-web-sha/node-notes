@@ -33,7 +33,7 @@ db.users.insertMany([
 # 🔍 Read (Query) Operations
 ## 5. Find All Documents in a Collection
 ```js
-db.collectionName.find()
+db.collectionName.find()  
 ```
 
 - Returns all documents in an array format.
