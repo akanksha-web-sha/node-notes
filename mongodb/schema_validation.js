@@ -9,6 +9,14 @@ mongoose
   .then(() => console.log("Connected!"))
   .catch((err) => console.log(err.message));
 // min, max, minlength, maxlength, enum, match, required, unique
+/*
+
+role: {
+  type: String,
+  enum: ['user', 'admin', 'moderator']
+}
+
+*/
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
