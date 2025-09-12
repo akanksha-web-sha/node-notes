@@ -59,21 +59,11 @@ exports.signupHandler = async (req, res) => {
       res.status(400).json({message: error.message})
     }
   }
-
+  
 
   exports.profileHandler = async(req, res)=>{
-    try {
-        const token = req.cookies.jwt;
-        if(!token) throw new Error("Unauthorized!");
-
-        const payload = await jwt.verify(token, "mysecretkey");
-        const userId = payload.userId;
-        const user = await User.findOne({_id: userId});
-
-        if(!user) throw new Error("Invalid token!");
-
-        res.status(200).json({message: user});
-
+    try {  
+        res.status(200).json({user: req.user});
     } catch (error) {
         res.status(400).json({message: error.message});
     }
@@ -85,5 +75,35 @@ exports.logoutHandler = async(req, res)=>{
       res.status(200).json({message: "You are logged out now!"});
   } catch (error) {
       res.status(400).json({error: error.message});
+  }
+}
+
+exports.protect = async(req, res, next)=>{
+  try {
+    const token = req.cookies.jwt;
+    if(!token) throw new Error("Unauthorized!");
+
+    const payload = await jwt.verify(token, "mysecretkey");
+    const userId = payload.userId;
+    const user = await User.findOne({_id: userId});
+
+    if(!user) throw new Error("Invalid token!");
+    req.user = user;
+    
+    next();
+  } catch (error) {
+    res.status(400).json({error: error.message});
+  }
+}
+
+
+exports.restrictToAdmin = (req, res, next)=>{
+  try {
+    const user = req.user;
+    if(user.role!="admin") throw new Error("You are not allowed to perform this action!");
+
+    next();
+  } catch (error) {
+    res.status(401).json({error: error.message});
   }
 }
