@@ -25,6 +25,7 @@ const saveImages = async(images, imageNames)=>{
 
 exports.createaHandler = async (req, res) => {
   try {
+    
     const imageNames = [];
     await saveImages(req.files, imageNames);
   
